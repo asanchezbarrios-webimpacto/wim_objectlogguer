@@ -26,7 +26,12 @@ class Wim_objectlogguer extends Module
         return parent::install()
             && $this->registerHook('header')
             && $this->registerHook('backOfficeHeader') 
-            && $this->registerHook('actionObjectProductUpdateBefore');
+            && $this->registerHook('actionObjectAddAfter')
+            && $this->registerHook('actionObjectAddBefore')
+            && $this->registerHook('actionObjectDeleteAfter')
+            && $this->registerHook('actionObjectDeleteBefore')
+            && $this->registerHook('actionObjectUpdateAfter')
+            && $this->registerHook('actionObjectUpdateBefore');
     }
     
     public function uninstall()
@@ -34,14 +39,72 @@ class Wim_objectlogguer extends Module
         return parent::uninstall();
     }
 
-    public function hookActionObjectProductUpdateBefore($params)
+    public function hookActionObjectAddAfter($params)
     {
         Db::getInstance()->insert('objectlogguer',array(
             'affected_object' => $params['object']->id, 
-            'action_type' => "update",
-            'object_type' =>  "product",
-            'message' => "Object Product with id " . $params['object']->id . " was update",
+            'action_type' =>  "add" ,
+            'object_type' =>  get_class($params['object']),
+            'message' => "Object ". get_class($params['object']) . " with id " . $params['object']->id . " add",
             'date_add' => date("Y-m-d H:i:s"),
         ));
     }
+    /*
+    public function hookActionObjectAddBefore($params)
+    {
+        Db::getInstance()->insert('objectlogguer',array(
+            'affected_object' => $params['object']->id, 
+            'action_type' =>  "add" ,
+            'object_type' =>  get_class($params['object']),
+            'message' => "Object ". get_class($params['object']) . " with id " . $params['object']->id . " add",
+            'date_add' => date("Y-m-d H:i:s"),
+        ));
+    }*/
+
+    public function hookActionObjectDeleteAfter($params)
+    {
+        Db::getInstance()->insert('objectlogguer',array(
+            'affected_object' => $params['object']->id, 
+            'action_type' => "delete",
+            'object_type' =>  get_class($params['object']),
+            'message' => "Object ". get_class($params['object']) . " with id " . $params['object']->id . " delete",
+            'date_add' => date("Y-m-d H:i:s"),
+        ));
+    }
+    /*
+    public function hookActionObjectDeleteBefore($params)
+    {
+        Db::getInstance()->insert('objectlogguer',array(
+            'affected_object' => $params['object']->id, 
+            'action_type' => "delete",
+            'object_type' =>  get_class($params['object']),
+            'message' => "Object ". get_class($params['object']) . " with id " . $params['object']->id . " delete",
+            'date_add' => date("Y-m-d H:i:s"),
+        ));
+    }*/
+
+
+    public function hookActionObjectUpdateAfter($params)
+    {
+        Db::getInstance()->insert('objectlogguer',array(
+            'affected_object' => $params['object']->id, 
+            'action_type' =>  "update" ,
+            'object_type' =>  get_class($params['object']),
+            'message' => "Object ". get_class($params['object']) . " with id " . $params['object']->id . " update",
+            'date_add' => date("Y-m-d H:i:s"),
+        ));
+    }
+    /*
+    public function hookActionObjectUpdateBefore($params)
+    {
+        Db::getInstance()->insert('objectlogguer',array(
+            'affected_object' => $params['object']->id, 
+            'action_type' =>  "update" ,
+            'object_type' =>  get_class($params['object']),
+            'message' => "Object ". get_class($params['object']) . " with id " . $params['object']->id . " update",
+            'date_add' => date("Y-m-d H:i:s"),
+        ));
+    }*/
+
+    
 }
