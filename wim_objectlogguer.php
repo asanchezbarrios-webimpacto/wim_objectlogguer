@@ -14,7 +14,7 @@ class Wim_objectlogguer extends Module
         $this->name = 'wim_objectlogguer';
         $this->tab = 'administration';
         $this->version = '1.0.0';
-        $this->author = 'Aitor Sánchez';
+        $this->author = 'Aitor_San';
         $this->need_instance = 0;
         $this->bootstrap = true;
         parent::__construct();

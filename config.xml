@@ -4,7 +4,7 @@
 	<displayName><![CDATA[wim_objectlogguer]]></displayName>
 	<version><![CDATA[1.0.0]]></version>
 	<description><![CDATA[Almacena los cambios que suceden al a&ntilde;adir, modificar o eliminar un producto, cliente o cualquier cosa.]]></description>
-	<author><![CDATA[Aitor S&aacute;nchez]]></author>
+	<author><![CDATA[Aitor_San]]></author>
 	<tab><![CDATA[administration]]></tab>
 	<is_configurable>0</is_configurable>
 	<need_instance>0</need_instance>
