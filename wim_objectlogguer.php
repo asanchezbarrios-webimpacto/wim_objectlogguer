@@ -31,7 +31,7 @@ if (!defined('_PS_VERSION_')) {
     exit;
 }
 
-class Wim_objectlogguer extends Module
+class WimObjectLogguer extends Module
 {
     public function __construct()
     {
@@ -52,24 +52,25 @@ class Wim_objectlogguer extends Module
         include(dirname(__FILE__).'/sql/install.php');
         return parent::install()
             && $this->registerHook('header')
-            && $this->registerHook('backOfficeHeader') 
+            && $this->registerHook('backOfficeHeader')
             && $this->registerHook('actionObjectAddAfter')
             && $this->registerHook('actionObjectDeleteAfter')
             && $this->registerHook('actionObjectUpdateAfter');
     }
 
-    public function annadirAccion($params, $event) {
+    public function annadirAccion($params, $event) 
+    {
         $accion = new ObjectLogger();
         $accion->affected_object = $params['object']->id;
         $accion->action_type = $event;
         $accion->object_type = get_class($params['object']);
-        if($event == "update" || $event == "delete") {
+        if ($event == "update" || $event == "delete") {
             $accion->message = "Object ". get_class($params['object']) . " with id " . $params['object']->id . " was $event" ."d";
-        }else {
+        } else {
             $accion->message = "Object ". get_class($params['object']) . " with id " . $params['object']->id . " was $event" ."ed";
         }
         $accion->date_add = date("Y-m-d H:i:s");
-        if(get_class($params['object']) != "ObjectLogger"){
+        if (get_class($params['object']) != "ObjectLogger"){
             $accion->add();
         }
     }
