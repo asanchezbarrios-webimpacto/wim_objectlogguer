@@ -65,9 +65,11 @@ class WimObjectLogguer extends Module
         $accion->action_type = $event;
         $accion->object_type = get_class($params['object']);
         if ($event == "update" || $event == "delete") {
-            $accion->message = "Object ". get_class($params['object']) . " with id " . $params['object']->id . " was $event" ."d";
+            $accion->message = "Object ". get_class($params['object']) 
+            . " with id " . $params['object']->id . " was $event" ."d";
         } else {
-            $accion->message = "Object ". get_class($params['object']) . " with id " . $params['object']->id . " was $event" ."ed";
+            $accion->message = "Object ". get_class($params['object']) 
+            . " with id " . $params['object']->id . " was $event" ."ed";
         }
         $accion->date_add = date("Y-m-d H:i:s");
         if (get_class($params['object']) != "ObjectLogger"){
