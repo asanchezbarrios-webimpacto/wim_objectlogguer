@@ -18,7 +18,7 @@
 * versions in the future. If you wish to customize PrestaShop for your
 * needs please refer to http://www.prestashop.com for more information.
 *
-*  @author PrestaShop SA <contact@prestashop.com>
+*  @author Aitor_San
 *  @copyright  2007-2016 PrestaShop SA
 *  @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 *  International Registered Trademark & Property of PrestaShop SA
@@ -43,7 +43,7 @@ class Wim_objectlogguer extends Module
         $this->bootstrap = true;
         parent::__construct();
         $this->displayName = $this->l('wim_objectlogguer');
-        $this->description = $this->l('Almacena los cambios que suceden al añadir, modificar o eliminar un producto, cliente o cualquier cosa.');
+        $this->description = $this->l('Modulo CRUD.');
         $this->ps_versions_compliancy = array('min' => '1.6', 'max' => _PS_VERSION_);
     }
 
