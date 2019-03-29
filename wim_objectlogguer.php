@@ -58,21 +58,21 @@ class WimObjectLogguer extends Module
             && $this->registerHook('actionObjectUpdateAfter');
     }
 
-    public function annadirAccion($params, $event) 
+    public function annadirAccion($params, $event)
     {
         $accion = new ObjectLogger();
         $accion->affected_object = $params['object']->id;
         $accion->action_type = $event;
         $accion->object_type = get_class($params['object']);
         if ($event == "update" || $event == "delete") {
-            $accion->message = "Object ". get_class($params['object']) 
+            $accion->message = "Object ". get_class($params['object'])
             . " with id " . $params['object']->id . " was $event" ."d";
         } else {
-            $accion->message = "Object ". get_class($params['object']) 
+            $accion->message = "Object ". get_class($params['object'])
             . " with id " . $params['object']->id . " was $event" ."ed";
         }
         $accion->date_add = date("Y-m-d H:i:s");
-        if (get_class($params['object']) != "ObjectLogger"){
+        if (get_class($params['object']) != "ObjectLogger") {
             $accion->add();
         }
     }
