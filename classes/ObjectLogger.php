@@ -37,4 +37,5 @@ class ObjectLogger extends ObjectModel
             'date_add' =>        array('type' => self::TYPE_DATE, 'validate' => 'isDateFormat', 'copy_post' => false),
         ),
     );
+    
 }
