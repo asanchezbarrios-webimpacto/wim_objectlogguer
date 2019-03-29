@@ -24,7 +24,7 @@
 *  International Registered Trademark & Property of PrestaShop SA
 */
 
-class ObjectLogger extends ObjectModel 
+class ObjectLogger extends ObjectModel
 {
     public static $definition = array(
         'table' => 'objectlogguer',
