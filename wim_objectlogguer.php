@@ -31,7 +31,7 @@ if (!defined('_PS_VERSION_')) {
     exit;
 }
 
-class Wim_ObjectLogguer extends Module
+class WimObjectLogguer extends Module
 {
     public function __construct()
     {
