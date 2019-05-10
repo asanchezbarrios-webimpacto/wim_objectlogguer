@@ -31,7 +31,7 @@ if (!defined('_PS_VERSION_')) {
     exit;
 }
 
-class WimObjectLogguer extends Module
+class Wim_ObjectLogguer extends Module
 {
     public function __construct()
     {
@@ -91,4 +91,83 @@ class WimObjectLogguer extends Module
     {
         $this->annadirAccion($params, "delete");
     }
+
+
+    public function renderList()
+    {
+        $fields_list = array(
+
+            'id_objectlogguer' => array(
+                'title' => $this->trans('id_objectlogguer', array(), 'Admin.Global'),
+                'search' => true,
+            ),
+            'affected_object' => array(
+                'title' => $this->trans('affected_object', array(), 'Admin.Global'),
+                'search' => true,
+            ),
+            'action_type' => array(
+                'title' => $this->trans('action_type', array(), 'Admin.Global'),
+                'search' => true,
+            ),
+            'object_type' => array(
+                'title' => $this->trans('object_type', array(), 'Admin.Global'),
+                'search' => true,
+            ),
+            'message' => array(
+                'title' => $this->trans('message', array(), 'Admin.Global'),
+                'search' => true,
+            ),
+            'date_add' => array(
+                'title' => $this->trans('date_add', array(), 'Admin.Global'),
+                'search' => true,
+            ),
+        );
+
+        if (!Configuration::get('PS_MULTISHOP_FEATURE_ACTIVE')) {
+            unset($fields_list['shop_name']);
+        }
+
+        $helper_list = new HelperList();
+        $helper_list->module = $this;
+        $helper_list->shopLinkType = '';
+        $helper_list->no_link = true;
+        $helper_list->show_toolbar = true;
+        $helper_list->simple_header = false;
+        $helper_list->identifier = 'id';
+        $helper_list->table = 'merged';
+        $helper_list->currentIndex = $this->context->link->getAdminLink('AdminModules', false).'&configure='.$this->name;
+        $helper_list->token = Tools::getAdminTokenLite('AdminModules');
+
+        // This is needed for displayEnableLink to avoid code duplication
+        $this->_helperlist = $helper_list;
+
+        /* Retrieve list data */
+        $actions = $this->getActions();
+
+        return $helper_list->generateList($actions, $fields_list);
+    }
+
+    function getActions() {
+        if(Tools::getValue('mergedFilter_id_objectlogguer') != null) {
+            return Db::getInstance()->ExecuteS("SELECT * FROM ps_objectlogguer WHERE id_objectlogguer = ".Tools::getValue('mergedFilter_id_objectlogguer'));
+        } else if (Tools::getValue('mergedFilter_affected_object') != null) {
+            return Db::getInstance()->ExecuteS("SELECT * FROM ps_objectlogguer WHERE affected_object = ". "'".Tools::getValue('mergedFilter_affected_object'). "'");
+        } else if (Tools::getValue('mergedFilter_action_type') != null) {
+            return Db::getInstance()->ExecuteS("SELECT * FROM ps_objectlogguer WHERE action_type = ". "'".Tools::getValue('mergedFilter_action_type'). "'");
+        } else if (Tools::getValue('mergedFilter_object_type') != null) {
+            return Db::getInstance()->ExecuteS("SELECT * FROM ps_objectlogguer WHERE object_type = ". "'".Tools::getValue('mergedFilter_object_type'). "'");
+        } else if (Tools::getValue('mergedFilter_message') != null) {
+            return Db::getInstance()->ExecuteS("SELECT * FROM ps_objectlogguer WHERE ps_objectlogguer.message = ". "'".Tools::getValue('mergedFilter_message'). "'");
+        } else if (Tools::getValue('mergedFilter_date_add') != null) {
+            return Db::getInstance()->ExecuteS("SELECT * FROM ps_objectlogguer WHERE date_add = ".Tools::getValue('mergedFilter_date_add'));
+        } else {
+            return Db::getInstance()->ExecuteS("SELECT * FROM ps_objectlogguer");
+        }
+    }
+
+    function getContent() {
+        $this->_html .= $this->renderList();
+        return $this->_html;
+    }
+    
 }
